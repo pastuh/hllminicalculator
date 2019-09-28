@@ -125,7 +125,7 @@ function updateInputField(newInput) {
         currentInput.value = "";
         let arrowMarker = document.querySelector( '.result' ).style;
         arrowMarker.setProperty( '--mark-color', `#ffdd40` );
-
+		document.querySelector('.info-line').style.display = 'none';
         disableButton( false, ['1', '2', '3', '4', '5', '6', '7', '8', '9'] );
     } else if (newInput === "enter") {
         console.log( 'Activated controls' );

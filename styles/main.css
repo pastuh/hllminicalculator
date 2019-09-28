@@ -5,6 +5,9 @@
 * {
     font: 400 28px Arial;
 }
+body {
+	background-color: #898989;
+}
 input {
     position: relative;
     width: 100%;
@@ -35,6 +38,7 @@ button:disabled {
     position: absolute;
     content: '';
     height: 4px;
+	padding: 1px;
     right: 0;
     left: 0;
     top: 0;
@@ -117,6 +121,13 @@ button:disabled {
 .numeric-theme .hg-button-bksp:enabled {
     background-color: #e5e5e5;
     color: #fff;
+}
+
+.info-line {
+	font-size: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 @media (min-width:641px)  {
