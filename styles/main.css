@@ -1,0 +1,127 @@
+:root {
+    --bg-position: 100%;
+    --mark-color: transparent;
+}
+* {
+    font: 400 28px Arial;
+}
+input {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    border: none;
+    box-sizing: border-box;
+    color: #fff;
+    background: transparent;
+    outline: none;
+    font-family: monospace;
+}
+button:disabled {
+    color: #fff !important;
+}
+
+/*
+  Theme: numeric
+*/
+.keyboard-container {
+    max-width: 350px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.keyboard-container::after {
+    background: linear-gradient(to left, #ffcd02 var(--bg-position), darkred 0% );
+    position: absolute;
+    content: '';
+    height: 4px;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+.numeric-theme {
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.numeric-theme + .simple-keyboard-preview {
+    max-width: 320px;
+}
+
+.simple-keyboard.hg-theme-default.numeric-theme
+.hg-button.hg-standardBtn.hg-button-at {
+    max-width: none;
+}
+
+.info-preview {
+    position: relative;
+    float: left;
+    width: 50%;
+    height: 60px;
+    transition: background 0.3s ease-in-out;
+    background: #2e2e2e;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-size: 28px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.info-preview::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    display: block;
+    border-style: solid;
+    border-width: 10px 0 10px 12px;
+    border-color: transparent transparent transparent var(--mark-color);
+    transform: translate(-50%, -50%);
+}
+
+.input {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.result {
+    font-weight: bold;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background-image: linear-gradient(to left, #ffdd40 100%, black 50%);
+}
+
+.numeric-theme .hg-button {
+    position: relative;
+    cursor: pointer;
+    font-size: 20px;
+    color: #898989;
+    border: 2px solid #fff !important;
+    -webkit-transition: width 2s;
+    transition: width 2s;
+}
+
+.numeric-theme .hg-button:hover:enabled {
+    background: #e5e5e5;
+}
+
+.numeric-theme .hg-button:active:enabled {
+    background-color: #2e2e2e;
+    color: white;
+    box-shadow: 0 1px #b5b5b5;
+    transform: translateY(4px);
+}
+
+.numeric-theme .hg-button-bksp:enabled {
+    background-color: #e5e5e5;
+    color: #fff;
+}
+
+@media (min-width:641px)  {
+    .numeric-theme .hg-button-bksp:hover:enabled {
+        background-color: darkred;
+    }
+}
+
