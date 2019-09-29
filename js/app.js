@@ -1,3 +1,4 @@
+const artyom = new Artyom();
 let Keyboard = window.SimpleKeyboard.default;
 
 let myKeyboard = new Keyboard( {
@@ -69,6 +70,10 @@ function disableButton(status, buttons) {
         let btn = document.querySelector( `[data-skbtn="${button}"]` );
         btn.disabled = status;
         btn.style.color = status === true ? "#fff" : "";
+
+        // Hide voice input
+        let btnMiniText = document.querySelector( `[data-skbtn="${button}"] span` ).style;
+        btnMiniText.setProperty( '--voice-text', `""` );
     } );
 }
 
@@ -101,17 +106,24 @@ function clearOldInfo() {
 }
 
 // MAIN activator after each BUTTON click
-function onKeyPress(button) {
-    checkButton( button );
+function onKeyPress(button, voiceInput = '') {
+    //console.log( `Received button: ${voiceInput}` );
+    checkButton( button, voiceInput );
     checkInputField();
     // console.log( `Counter started` );
     clearTimeout( timerId );
-    timerId = setTimeout( clearOldInfo, 6000 );
+    timerId = setTimeout( clearOldInfo, 10000 );
 }
 
-function checkButton(button) {
+function checkButton(button, voiceInput = '') {
     if (button[0] !== 'delete' && button[0] !== 'enter' && !myKeyboard.getButtonElement( button ).disabled) {
         // console.log( `NotDisabled ::: ${button}` );
+
+        // Show voice input
+        let btnMiniText = document.querySelector( `[data-skbtn="${button}"] span` ).style;
+        btnMiniText.setProperty( '--voice-text', `"${voiceInput}"` );
+
+
         updateInputField( button );
     } else if (button[0] === 'enter' || button[0] === 'delete') {
         clearOldInfo();
@@ -125,7 +137,7 @@ function updateInputField(newInput) {
         currentInput.value = "";
         let arrowMarker = document.querySelector( '.result' ).style;
         arrowMarker.setProperty( '--mark-color', `#ffdd40` );
-		document.querySelector('.info-line').style.display = 'none';
+
         disableButton( false, ['1', '2', '3', '4', '5', '6', '7', '8', '9'] );
     } else if (newInput === "enter") {
         console.log( 'Activated controls' );
@@ -167,3 +179,132 @@ function keyMapper(callbackList, options) {
         return object && object.hasOwnProperty( property );
     }
 }
+
+function startContinuousArtyom(language = 'en-US') {
+    artyom.fatality(); // use this to stop any of
+
+    setTimeout( function () {
+        // if you use artyom.fatality , wait 250 ms to initialize again.
+        artyom
+            .initialize( {
+                lang: language, // A lot of languages are supported. Read the docs ! en-US
+                continuous: true, // Artyom will listen forever
+                listen: true, // Start recognizing
+                debug: false, // Show everything in the console
+                speed: 1 // talk normally
+            } )
+            .then( function () {
+                console.log( "Ready to work !" );
+            } );
+    }, 250 );
+}
+
+document.querySelector( ".activate-voice" ).addEventListener( 'click', function (e) {
+    e.target.style.visibility = 'hidden';
+    document.querySelector( ".voice-preview" ).style.display = 'block';
+    startContinuousArtyom();
+} );
+
+
+// Suggested to say: G * | B * (* is any word from the list)
+var myGroup = [
+    {
+        indexes: ["1", "won", "when", "what", "loan", "month", "go1", "go one", "want", "beat one", "go first"],
+        action: function (i) {
+            onKeyPress( 1, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["2", "two", "too", "do", "you", "to do", "go to", "YouTube", "tune", "G-tube", "go second",
+            "давай", "davai", "да", "vba"],
+        action: function (i) {
+            onKeyPress( 2, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["3", "three", "tree", "treat", "tweet", "free", "Tamari", "fry", "be free", "beef tripe", "defeat", "City", "Freddy", "gold tint", "tent", "troika", "тройка"],
+        action: function (i) {
+            console.log( 'Pressing 3' );
+            onKeyPress( 3, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["4", "four", "phone", "floor", "for", "few", "false", "Feud", "fruit", "fur", "before", "g-form", "Seafood", "food", "Quant"],
+        action: function (i) {
+            onKeyPress( 4, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["5", "five", "fine", "find", "define", "gheefunny", "Farm", "beef", "GTA V"],
+        action: function (i) {
+            onKeyPress( 5, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["6", "six", "sex", "Sikhs", "seeds", "snakes", "search", "Siege"],
+        action: function (i) {
+            onKeyPress( 6, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["7", "seven", "center", "amen", "Shannon", "salmon", "Shaymin", "Sharon", "shaving", "send", "Beast", "decent", "Beeson", "GSM", "BCM"],
+        action: function (i) {
+            onKeyPress( 7, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["8", "eight", "age", "Ange", "each", "eat", "GH", "Beach", "BH", "Beat It", "being"],
+        action: function (i) {
+            onKeyPress( 8, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["9", "nine", "mine", "Noid", "join", "benign", "beanie", "be mine", "big night", "Gina", "G night", "G line", "Jean Knight"],
+        action: function (i) {
+            // console.log(`Index: ${i} at ${this.indexes}`);
+            onKeyPress( 9, this.indexes[i] );
+        }
+    },
+    {
+        indexes: [
+            "0",
+            "zero",
+            "Zeno",
+            "Zito",
+            "gyro",
+            "zeal",
+            "null",
+            "empty",
+            "GMT",
+            "Gmail",
+            "Zidane",
+            "G-Eazy",
+            "G-Man",
+            "GG",
+            "busy"
+        ],
+        action: function (i) {
+            onKeyPress( 0, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["black", "game", "white", "quit", "\."],
+        action: function (i) {
+            onKeyPress( `{bksp}`, this.indexes[i] );
+        }
+    },
+    {
+        indexes: ["Russia", "fashion", "Hashem"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: ru-RU';
+            startContinuousArtyom( 'ru-RU' );
+        }
+    }
+];
+
+artyom.addCommands( myGroup );
+
+// Check if correct (and improve)
+/*artyom.redirectRecognizedTextOutput( function (recognized, isFinal) {
+    console.log( `Recognized: ${recognized} || isFinal: ${isFinal}` );
+} );*/

@@ -1,13 +1,13 @@
 :root {
     --bg-position: 100%;
     --mark-color: transparent;
+    --voice-text: "";
 }
+
 * {
     font: 400 28px Arial;
 }
-body {
-	background-color: #898989;
-}
+
 input {
     position: relative;
     width: 100%;
@@ -19,6 +19,7 @@ input {
     outline: none;
     font-family: monospace;
 }
+
 button:disabled {
     color: #fff !important;
 }
@@ -34,11 +35,10 @@ button:disabled {
 }
 
 .keyboard-container::after {
-    background: linear-gradient(to left, #ffcd02 var(--bg-position), darkred 0% );
+    background: linear-gradient(to left, #ffcd02 var(--bg-position), darkred 0%);
     position: absolute;
     content: '';
     height: 4px;
-	padding: 1px;
     right: 0;
     left: 0;
     top: 0;
@@ -123,14 +123,40 @@ button:disabled {
     color: #fff;
 }
 
-.info-line {
-	font-size: 10px;
+.simple-keyboard .hg-button span::before {
+    color: red;
+    content: var(--voice-text);
+    font-size: 10px;
     position: absolute;
     bottom: 0;
-    left: 0;
+    right: 0;
+    width: 100%;
 }
 
-@media (min-width:641px)  {
+.voice-block {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 10px;
+    padding: 4px;
+    text-align: center;
+    background: #e5e5e5;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, .3);
+}
+
+.activate-voice {
+    width: 50px;
+    height: 22px;
+}
+
+.voice-preview {
+    display: none;
+    width: 100px;
+    height: 22px;
+}
+
+@media (min-width: 641px) {
     .numeric-theme .hg-button-bksp:hover:enabled {
         background-color: darkred;
     }
