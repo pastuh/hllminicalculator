@@ -3,7 +3,9 @@
     --mark-color: transparent;
     --voice-text: "";
 }
-
+body {
+    background-color: #898989;
+}
 * {
     font: 400 28px Arial;
 }
@@ -39,6 +41,7 @@ button:disabled {
     position: absolute;
     content: '';
     height: 4px;
+    padding: 1px;
     right: 0;
     left: 0;
     top: 0;
@@ -154,6 +157,18 @@ button:disabled {
     display: none;
     width: 100px;
     height: 22px;
+}
+
+.info-line {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 10px;
+    padding: 4px;
+    text-align: center;
+    background: #e5e5e5;
+    box-shadow: 0 0 3px -1px rgba(0, 0, 0, .3);
 }
 
 @media (min-width: 641px) {

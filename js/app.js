@@ -137,7 +137,7 @@ function updateInputField(newInput) {
         currentInput.value = "";
         let arrowMarker = document.querySelector( '.result' ).style;
         arrowMarker.setProperty( '--mark-color', `#ffdd40` );
-
+        document.querySelector('.info-line').style.display = 'none';
         disableButton( false, ['1', '2', '3', '4', '5', '6', '7', '8', '9'] );
     } else if (newInput === "enter") {
         console.log( 'Activated controls' );
@@ -209,7 +209,7 @@ document.querySelector( ".activate-voice" ).addEventListener( 'click', function 
 // Suggested to say: G * | B * (* is any word from the list)
 var myGroup = [
     {
-        indexes: ["1", "won", "when", "what", "loan", "month", "go1", "go one", "want", "beat one", "go first"],
+        indexes: ["1", "won", "when", "what", "loan", "month", "go1", "go one", "want", "beat one", "go first", "genome"],
         action: function (i) {
             onKeyPress( 1, this.indexes[i] );
         }
@@ -305,6 +305,6 @@ var myGroup = [
 artyom.addCommands( myGroup );
 
 // Check if correct (and improve)
-/*artyom.redirectRecognizedTextOutput( function (recognized, isFinal) {
+artyom.redirectRecognizedTextOutput( function (recognized, isFinal) {
     console.log( `Recognized: ${recognized} || isFinal: ${isFinal}` );
-} );*/
+} );
