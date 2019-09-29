@@ -222,9 +222,8 @@ var myGroup = [
         }
     },
     {
-        indexes: ["3", "three", "tree", "treat", "tweet", "free", "Tamari", "fry", "be free", "beef tripe", "defeat", "City", "Freddy", "gold tint", "tent", "troika", "тройка"],
+        indexes: ["3", "three", "tree", "treat", "tweet", "free", "Tamari", "fry", "be free", "beef tripe", "defeat", "City", "Freddy", "gold tint", "tent"],
         action: function (i) {
-            console.log( 'Pressing 3' );
             onKeyPress( 3, this.indexes[i] );
         }
     },
@@ -305,6 +304,8 @@ var myGroup = [
 artyom.addCommands( myGroup );
 
 // Check if correct (and improve)
+/*
 artyom.redirectRecognizedTextOutput( function (recognized, isFinal) {
     console.log( `Recognized: ${recognized} || isFinal: ${isFinal}` );
 } );
+*/
