@@ -304,8 +304,14 @@ var myGroup = [
 artyom.addCommands( myGroup );
 
 // Check if correct (and improve)
-/*
 artyom.redirectRecognizedTextOutput( function (recognized, isFinal) {
-    console.log( `Recognized: ${recognized} || isFinal: ${isFinal}` );
-} );
-*/
+    if (isFinal) {
+        // console.log( `FIRST: ${recognized}` );
+        let isnum = /^\d+$/.test(recognized);
+        if (isnum && recognized.length >= 3 && recognized.length <= 4) {
+            for (let i = 0; i < recognized.length; i++) {
+                onKeyPress(parseInt(recognized.charAt(i)));
+            }
+        }
+    }
+});
