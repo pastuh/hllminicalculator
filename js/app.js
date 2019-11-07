@@ -33,6 +33,7 @@ let myKeyboard = new Keyboard( {
 let globalInput = document.querySelector( ".input" );
 const allButtonNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 let timerId;
+let targetInput, targetDistance;
 
 function checkInputField() {
     let input = document.querySelector( ".input" );
@@ -65,7 +66,7 @@ function checkInputField() {
 }
 
 function disableButton(status, buttons) {
-    // console.log( `Button is disabled? : ${status} | ${buttons}` );
+    //console.log( `Button is disabled? : ${status} | ${buttons}` );
     buttons.forEach( button => {
         let btn = document.querySelector( `[data-skbtn="${button}"]` );
         btn.disabled = status;
@@ -85,6 +86,8 @@ function calculateDistance(input) {
         let distanceResult = (100 * input) / 1600;
         let realResult = Math.round( m * input + b );
         document.querySelector( '.result' ).innerHTML = realResult;
+        targetInput = input;
+        targetDistance = realResult;
 
         // Additional indicators if Distance CALCULATED
         let infoMarker = document.querySelector( '.keyboard-container' ).style;
@@ -96,6 +99,32 @@ function calculateDistance(input) {
 }
 
 function clearOldInfo() {
+    let totalLastResults = document.querySelectorAll( '.last-result' );
+    let lastVisibleInput;
+
+    if (document.querySelector( '.last-input' ) !== null) {
+        lastVisibleInput = document.querySelector( '.last-input' ).textContent;
+    }
+
+    if (targetInput !== lastVisibleInput) {
+
+        if (totalLastResults.length === 4) {
+            let last = totalLastResults[totalLastResults.length - 1];
+            last.parentNode.removeChild( last );
+        }
+
+        let resultNode = '<div class="last-result"><span class="last-input">' + targetInput + '</span>' + '<span class="last-distance">' + targetDistance + '</span></div>';
+        let lastResults = document.querySelector( '.last-info' );
+        lastResults.insertAdjacentHTML( 'afterbegin', resultNode );
+    }
+
+    if (totalLastResults.length > 0) {
+        for (let i = 0; totalLastResults.length > i; i++) {
+            let visibility = (70 - (i * 15));
+            totalLastResults[i].style.opacity = visibility + '%';
+        }
+    }
+
     globalInput.value = '';
     // Remove indicator
     let arrowMarker = document.querySelector( '.result' ).style;
@@ -112,7 +141,7 @@ function onKeyPress(button, voiceInput = '') {
     checkInputField();
     // console.log( `Counter started` );
     clearTimeout( timerId );
-    timerId = setTimeout( clearOldInfo, 10000 );
+    timerId = setTimeout( clearOldInfo, 7000 );
 }
 
 function checkButton(button, voiceInput = '') {
@@ -137,7 +166,7 @@ function updateInputField(newInput) {
         currentInput.value = "";
         let arrowMarker = document.querySelector( '.result' ).style;
         arrowMarker.setProperty( '--mark-color', `#ffdd40` );
-        document.querySelector('.info-line').style.display = 'none';
+        document.querySelector( '.info-line' ).style.display = 'none';
         disableButton( false, ['1', '2', '3', '4', '5', '6', '7', '8', '9'] );
     } else if (newInput === "enter") {
         console.log( 'Activated controls' );
@@ -293,10 +322,87 @@ var myGroup = [
         }
     },
     {
-        indexes: ["Russia", "fashion", "Hashem"],
+        indexes: ["Russian", "Russia", "Ruski"],
         action: function () {
             document.querySelector( ".voice-preview" ).innerHTML = 'Language: ru-RU';
             startContinuousArtyom( 'ru-RU' );
+        }
+    },
+    {
+        indexes: ["Japanese", "Japan"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: ja-JP';
+            startContinuousArtyom( 'ja-JP' );
+        }
+    },
+    {
+        indexes: ["Dutch", "Nederlands"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: nl-NL';
+            startContinuousArtyom( 'nl-NL' );
+        }
+    },
+    {
+        indexes: ["Indonesian", "bahasa", "Indonesia"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: id-ID';
+            startContinuousArtyom( 'id-ID' );
+        }
+    },
+    {
+        indexes: ["Polski", "Polish", "Poland"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: pl-PL';
+            startContinuousArtyom( 'pl-PL' );
+        }
+    },
+    {
+        indexes: ["Cantonese", "Canton", "Guangzhou"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: zh-HK';
+            startContinuousArtyom( 'zh-HK' );
+        }
+    },
+    {
+        indexes: ["Mandarin", "Pinyin"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: zh-CN';
+            startContinuousArtyom( 'zh-CN' );
+        }
+    },
+    {
+        indexes: ["Português", "Portuguese", "Portuguesa"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: pt-PT';
+            startContinuousArtyom( 'pt-PT' );
+        }
+    },
+    {
+        indexes: ["Italiano", "Italian"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: it-IT';
+            startContinuousArtyom( 'it-IT' );
+        }
+    },
+    {
+        indexes: ["Español", "Spanish", "Castilian"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: es-ES';
+            startContinuousArtyom( 'es-ES' );
+        }
+    },
+    {
+        indexes: ["German", "Deutsch"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: de-DE';
+            startContinuousArtyom( 'de-DE' );
+        }
+    },
+    {
+        indexes: ["Hindi", "Devanagari"],
+        action: function () {
+            document.querySelector( ".voice-preview" ).innerHTML = 'Language: hi-IN';
+            startContinuousArtyom( 'hi-IN' );
         }
     }
 ];
@@ -306,12 +412,12 @@ artyom.addCommands( myGroup );
 // Check if correct (and improve)
 artyom.redirectRecognizedTextOutput( function (recognized, isFinal) {
     if (isFinal) {
-        // console.log( `FIRST: ${recognized}` );
-        let isnum = /^\d+$/.test(recognized);
+        //console.log( `FIRST: ${recognized}` );
+        let isnum = /^\d+$/.test( recognized );
         if (isnum && recognized.length >= 3 && recognized.length <= 4) {
             for (let i = 0; i < recognized.length; i++) {
-                onKeyPress(parseInt(recognized.charAt(i)));
+                onKeyPress( parseInt( recognized.charAt( i ) ) );
             }
         }
     }
-});
+} );
