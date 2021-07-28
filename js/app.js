@@ -41,7 +41,7 @@ function checkInputField() {
     // console.log( `Current input: ${input.value}` );
 
     let teams = document.getElementById('teams');
-    console.log( `Current input: ${teams.value}` );
+    //console.log( `Current input: ${teams.value}` );
 
     const regexp = /^\d+$/;
     if (input.value.match( regexp )) {
