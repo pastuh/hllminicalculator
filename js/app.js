@@ -33,12 +33,15 @@ let myKeyboard = new Keyboard( {
 let globalInput = document.querySelector( ".input" );
 const allButtonNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 let timerId;
-let targetInput, targetDistance;
+let targetInput, targetDistance, targetTeam;
 
 function checkInputField() {
     let input = document.querySelector( ".input" );
     disableButton( input.value === "", ['0', '{bksp}'] );
     // console.log( `Current input: ${input.value}` );
+
+    let teams = document.getElementById('teams');
+    console.log( `Current input: ${teams.value}` );
 
     const regexp = /^\d+$/;
     if (input.value.match( regexp )) {
@@ -61,7 +64,7 @@ function checkInputField() {
             disableButton( true, allButtonNumbers );
         }
 
-        calculateDistance( input.value );
+        calculateDistance( input.value, teams.value );
     }
 }
 
@@ -78,17 +81,27 @@ function disableButton(status, buttons) {
     } );
 }
 
-function calculateDistance(input) {
-    let m = -0.23703;
-    let b = 1001.46;
-
+function calculateDistance(input, teams) {
     if (input >= 100 && input <= 1600) {
         let distanceResult = (100 * input) / 1600;
-        let realResult = Math.round( m * input + b );
-        document.querySelector( '.result' ).innerHTML = realResult;
-        targetInput = input;
-        targetDistance = realResult;
 
+        let realResult = 0;
+
+        if (teams == "Original") {
+            let m = -0.23703;
+            let b = 1001.46;
+            realResult = Math.round( m * input + b );
+        } else if (teams == "Russian") {
+            let k = 21.33;
+            let l = 100;
+            realResult = Math.round( (((input / l) - 1) * k) + 800);
+        }
+
+        document.querySelector( '.result' ).innerHTML = realResult;
+        targetDistance = realResult;
+        targetInput = input;
+        targetTeam = teams == "Original" ? "US/Germany" : teams;
+        
         // Additional indicators if Distance CALCULATED
         let infoMarker = document.querySelector( '.keyboard-container' ).style;
         infoMarker.setProperty( '--bg-position', `${distanceResult}` + '%' );
@@ -113,7 +126,9 @@ function clearOldInfo() {
             last.parentNode.removeChild( last );
         }
 
-        let resultNode = '<div class="last-result"><span class="last-input">' + targetInput + '</span>' + '<span class="last-distance">' + targetDistance + '</span></div>';
+        let resultNode = '<div class="last-result"><span class="last-team">' + targetTeam + 
+            '</span>' + '<span class="last-input">' + targetInput + '</span>' + 
+            '<span class="last-distance">' + targetDistance + '</span></div>';
         let lastResults = document.querySelector( '.last-info' );
         lastResults.insertAdjacentHTML( 'afterbegin', resultNode );
     }
