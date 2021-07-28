@@ -156,7 +156,7 @@ function onKeyPress(button, voiceInput = '') {
     checkInputField();
     // console.log( `Counter started` );
     clearTimeout( timerId );
-    timerId = setTimeout( clearOldInfo, 7000 );
+    timerId = setTimeout( clearOldInfo, 5000 );
 }
 
 function checkButton(button, voiceInput = '') {
