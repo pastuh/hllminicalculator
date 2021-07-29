@@ -94,7 +94,7 @@ function calculateDistance(input, teams) {
         } else if (teams == "Russian") {
             let k = 21.33;
             let l = 100;
-            realResult = Math.round( (((input / l) - 1) * k) + 800);
+            realResult = Math.round( 1120 - (((input / l) - 1) * k)) ;
         }
 
         document.querySelector( '.result' ).innerHTML = realResult;
