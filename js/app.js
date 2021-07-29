@@ -117,9 +117,10 @@ function clearOldInfo() {
 
     if (document.querySelector( '.last-input' ) !== null) {
         lastVisibleInput = document.querySelector( '.last-input' ).textContent;
+        lastVisibleTeam = document.querySelector( '.last-team' ).textContent;
     }
 
-    if (targetInput !== lastVisibleInput) {
+    if (targetInput !== lastVisibleInput || targetTeam !== lastVisibleTeam) {
 
         if (totalLastResults.length === 4) {
             let last = totalLastResults[totalLastResults.length - 1];
@@ -170,7 +171,6 @@ function checkButton(button, voiceInput = '') {
         // Show voice input
         let btnMiniText = document.querySelector( `[data-skbtn="${button}"] span` ).style;
         btnMiniText.setProperty( '--voice-text', `"${voiceInput}"` );
-
 
         updateInputField( button );
 
