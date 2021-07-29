@@ -152,11 +152,15 @@ function clearOldInfo() {
 // MAIN activator after each BUTTON click
 function onKeyPress(button, voiceInput = '') {
     //console.log( `Received button: ${voiceInput}` );
-    checkButton( button, voiceInput );
+    let cleared = checkButton( button, voiceInput );
     checkInputField();
     // console.log( `Counter started` );
     clearTimeout( timerId );
-    timerId = setTimeout( clearOldInfo, 5000 );
+    if (cleared) {
+        clearOldInfo();
+    } else {
+        timerId = setTimeout( clearOldInfo, 5000 );
+    }
 }
 
 function checkButton(button, voiceInput = '') {
@@ -169,9 +173,16 @@ function checkButton(button, voiceInput = '') {
 
 
         updateInputField( button );
+
+        if (button === "{bksp}") {
+            return true;
+        }
     } else if (button[0] === 'enter' || button[0] === 'delete') {
         clearOldInfo();
+        return true;
     }
+
+    return false;
 }
 
 function updateInputField(newInput) {
@@ -181,7 +192,6 @@ function updateInputField(newInput) {
         currentInput.value = "";
         let arrowMarker = document.querySelector( '.result' ).style;
         arrowMarker.setProperty( '--mark-color', `#ffdd40` );
-        document.querySelector( '.info-line' ).style.display = 'none';
         disableButton( false, ['1', '2', '3', '4', '5', '6', '7', '8', '9'] );
     } else if (newInput === "enter") {
         console.log( 'Activated controls' );
