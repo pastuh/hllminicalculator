@@ -10,6 +10,75 @@ body {
     font: 400 28px Arial;
 }
 
+.modal {
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width: 100%;
+}
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index:10;
+    background-color: #898989;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s, visibility 0s 0.4s;
+}
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s;
+}
+.modal #selection {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.label {
+    color: rgb(197, 197, 197);
+    text-transform: uppercase;
+    padding: 5px 0;
+}
+.label::after {
+    content: "▼";
+    display: flex;
+    font-size: 10px;
+    color: rgb(197, 197, 197);
+}
+.label_desc {
+    font-size: 16px;
+}
+.modal select {
+    flex: 1;
+    padding: 5px 20px;
+    height: 40px;
+    background: #ececec;
+    border: 0 none;
+    cursor: pointer;
+    box-shadow: 0 0 3px -1px rgb(0 0 0 / 30%);
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.modal #confirm_faction {
+    background: darkred;
+    color: rgb(197, 197, 197);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.modal #confirm_faction:hover {
+    background: #ffdd40;
+    color: #2e2e2e;
+}
+
 input {
     position: relative;
     width: 100%;

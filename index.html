@@ -19,15 +19,30 @@
 </head>
 
 <body>
-<div class="keyboard-container">
-    <input class="input info-preview" placeholder="Input.." maxlength="4" min="100" max="1600" disabled/>
-    <div class="result info-preview"></div>
-    <div class="simple-keyboard"></div>
-    <div class="last-info"></div>
-	<div class="info-line">Website use google-analytics..</div>
-    <div class="voice-block activate-voice">Activate voice</div>
-    <div class="voice-block voice-preview">Language: en-US</div>
-</div>
+<section class="content">
+    <div class="keyboard-container">
+        <input class="input info-preview" placeholder="Input.." maxlength="4" min="100" max="1600" disabled/>
+        <div class="result info-preview"></div>
+        <div class="simple-keyboard"></div>
+        <div class="last-info"></div>
+        <div class="info-line">Website use google-analytics..</div>
+        <div class="voice-block activate-voice">Activate voice</div>
+        <div class="voice-block voice-preview">Language: en-US</div>
+    </div>
+</section>
+
+<section class="modal active">
+    <div id="selection">
+        <label for="factions" class="label"><span class="label_desc">Choose faction</span> </label>
+        <select id="factions">
+            <option value="default">Allies / Axis</option>
+            <option value="ru">Soviet Union</option>
+        </select>
+    </div>
+    <div id="confirm_faction">
+        Start
+    </div>
+</section>
 
 <script src="js/simple-keyboard.js"></script>
 <script src="js/app.js"></script>

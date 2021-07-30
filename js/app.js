@@ -33,7 +33,7 @@ let myKeyboard = new Keyboard( {
 let globalInput = document.querySelector( ".input" );
 const allButtonNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 let timerId;
-let targetInput, targetDistance;
+let targetInput, targetDistance, targetFaction;
 
 function checkInputField() {
     let input = document.querySelector( ".input" );
@@ -79,12 +79,26 @@ function disableButton(status, buttons) {
 }
 
 function calculateDistance(input) {
-    let m = -0.23703;
-    let b = 1001.46;
+    // console.log(`Selected: ${targetFaction}`);
+    let m, b;
+    if(targetFaction === 'default') {
+        m = -0.23703;
+        b = 1001.46;
+    } else {
+        m = 21.33;
+        b = 100;
+    }
 
     if (input >= 100 && input <= 1600) {
         let distanceResult = (100 * input) / 1600;
-        let realResult = Math.round( m * input + b );
+        let realResult;
+        if(targetFaction === 'default') {
+            realResult = Math.round( m * input + b );
+        } else {
+            //Formula by sleepybjr
+            realResult = Math.round( 1120 - (((input / b) - 1) * m)) ;
+        }
+
         document.querySelector( '.result' ).innerHTML = realResult;
         targetInput = input;
         targetDistance = realResult;
@@ -141,7 +155,7 @@ function onKeyPress(button, voiceInput = '') {
     checkInputField();
     // console.log( `Counter started` );
     clearTimeout( timerId );
-    timerId = setTimeout( clearOldInfo, 7000 );
+    timerId = setTimeout( clearOldInfo, 6500 );
 }
 
 function checkButton(button, voiceInput = '') {
@@ -182,6 +196,12 @@ document.addEventListener( 'DOMContentLoaded', () => {
         eventType: 'keydown',
     };
     keyMapper( [onKeyPress], options );
+
+    document.querySelector( "#confirm_faction" ).addEventListener( 'click', function (e) {
+        e.preventDefault();
+        targetFaction = document.getElementById("factions").value;
+        document.querySelector('.modal').classList.remove("active");
+    } );
 } );
 
 function keyMapper(callbackList, options) {
