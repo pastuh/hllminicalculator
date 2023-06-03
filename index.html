@@ -8,13 +8,14 @@
     <script src="js/artyom.window.js"></script>
 	<title>HLL MINI-Calculator</title>
 	
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-91799872-2"></script>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DVL5N9NK1"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
-	  gtag('config', 'UA-91799872-2');
+
+	  gtag('config', 'G-0DVL5N9NK1');
 	</script>
 </head>
 
@@ -26,6 +27,7 @@
         <div class="simple-keyboard"></div>
         <div class="last-info"></div>
         <div class="info-line">Website use google-analytics..</div>
+		<div class="info-faction"></div>
         <div class="voice-block activate-voice">Activate voice</div>
         <div class="voice-block voice-preview">Language: en-US</div>
     </div>
@@ -35,8 +37,10 @@
     <div id="selection">
         <label for="factions" class="label"><span class="label_desc">Choose faction</span> </label>
         <select id="factions">
-            <option value="default">Allies / Axis</option>
-            <option value="ru">Soviet Union</option>
+            <option value="faction-us">United States</option>
+			<option value="faction-g">Germany</option>
+            <option value="faction-su">Soviet Union</option>
+			<option value="faction-gb">Great Britain</option>
         </select>
     </div>
     <div id="confirm_faction">

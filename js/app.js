@@ -78,27 +78,35 @@ function disableButton(status, buttons) {
     } );
 }
 
+function calculateMils(distance, minDistance, maxDistance, minMils, maxMils) {
+	return Math.floor( ((distance - minDistance) / (maxDistance - minDistance)) * (minMils - maxMils) + maxMils);
+}
+
 function calculateDistance(input) {
-    // console.log(`Selected: ${targetFaction}`);
-    let m, b;
-    if(targetFaction === 'default') {
-        m = -0.23703;
-        b = 1001.46;
-    } else {
-        m = 21.33;
-        b = 100;
-    }
 
     if (input >= 100 && input <= 1600) {
         let distanceResult = (100 * input) / 1600;
         let realResult;
-        if(targetFaction === 'default') {
-            realResult = Math.round( m * input + b );
-        } else {
-            //Formula by sleepybjr
-            realResult = Math.round( 1120 - (((input / b) - 1) * m)) ;
-        }
-
+				
+		if(targetFaction === 'faction-us') {
+			document.querySelector( '.info-faction' ).textContent = "United States"
+			realResult = calculateMils(input, 100, 1600, 622, 978)
+		} else if(targetFaction === 'faction-g') {
+			document.querySelector( '.info-faction' ).textContent = "Germany"
+			realResult = calculateMils(input, 100, 1600, 622, 978)
+		} else if(targetFaction === 'faction-su') {
+			document.querySelector( '.info-faction' ).textContent = "Soviet Union"
+			realResult = calculateMils(input, 100, 1600, 800, 1120)
+		} else {
+			document.querySelector( '.info-faction' ).textContent = "Great Britain"
+			
+			// Random values fix (faction-gb)
+			if((input >= 200 && input <= 800) || (input >= 1100 && input <= 1200) ) {
+				input = +input + -5;
+			}
+			realResult = calculateMils(input, 100, 1600, 267, 533)
+		}
+		
         document.querySelector( '.result' ).innerHTML = realResult;
         targetInput = input;
         targetDistance = realResult;
@@ -181,6 +189,7 @@ function updateInputField(newInput) {
         let arrowMarker = document.querySelector( '.result' ).style;
         arrowMarker.setProperty( '--mark-color', `#ffdd40` );
         document.querySelector( '.info-line' ).style.display = 'none';
+		document.querySelector( '.info-faction' ).style.display = 'block';
         disableButton( false, ['1', '2', '3', '4', '5', '6', '7', '8', '9'] );
     } else if (newInput === "enter") {
         console.log( 'Activated controls' );
